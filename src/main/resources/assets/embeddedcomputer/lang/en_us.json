@@ -1,6 +1,7 @@
 {
   "itemGroup.embeddedcomputer": "Embedded Computer",
   "block.embeddedcomputer.embedded_computer": "Embedded Computer",
+  "block.embeddedcomputer.secure_computer": "Secure Computer",
   "block.embeddedcomputer.hard_drive": "Hard Drive",
   "item.embeddedcomputer.zip_disk": "Zip Disk",
   "item.embeddedcomputer.flash_card": "Flash Card",

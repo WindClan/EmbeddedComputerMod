@@ -10,6 +10,7 @@ import net.fabricmc.api.ModInitializer;
 import org.windclan.embeddedcomputer.embedded.EmbeddedComputerAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.windclan.embeddedcomputer.secure.SecureComputerAPI;
 
 public class main implements ModInitializer {
 
@@ -20,8 +21,12 @@ public class main implements ModInitializer {
         a.registerPeripherals();
         a.registerItemGroups();
         ComputerCraftAPI.registerAPIFactory(computer -> {
-            var embedded = computer.getComponent(ComputerComponents.EMBEDDED);
+            var embedded = computer.getComponent(registry.EMBEDDED_COMPONENT);
             return embedded == null ? null : new EmbeddedComputerAPI(embedded);
+        });
+        ComputerCraftAPI.registerAPIFactory(computer -> {
+            var secure = computer.getComponent(registry.SECURE_COMPONENT);
+            return secure == null ? null : new SecureComputerAPI(secure);
         });
     }
 }

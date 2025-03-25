@@ -5,6 +5,7 @@
  */
 package org.windclan.embeddedcomputer;
 
+import dan200.computercraft.api.component.ComputerComponent;
 import dan200.computercraft.api.peripheral.PeripheralLookup;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -21,9 +22,13 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 import org.windclan.embeddedcomputer.embedded.EmbeddedComputerPeripheral;
+import org.windclan.embeddedcomputer.embedded.IEmbeddedComputer;
 import org.windclan.embeddedcomputer.embedded.block.EmbeddedComputerBlock;
 import org.windclan.embeddedcomputer.embedded.block.EmbeddedComputerBlockEntity;
 import org.windclan.embeddedcomputer.embedded.item.ComputerBlockItem;
+import org.windclan.embeddedcomputer.secure.SecureComputerPeripheral;
+import org.windclan.embeddedcomputer.secure.block.SecureComputerBlock;
+import org.windclan.embeddedcomputer.secure.block.SecureComputerBlockEntity;
 import org.windclan.embeddedcomputer.storage.harddrive.HardDriveBlock;
 import org.windclan.embeddedcomputer.storage.harddrive.HardDriveBlockEntity;
 import org.windclan.embeddedcomputer.platform.registry1;
@@ -62,13 +67,33 @@ public class registry {
             new HardDriveItem(HARD_DRIVE, new FabricItemSettings().maxCount(1))
     );
 
+    public static Block SECURE_COMPUTER = Registry.register(
+            Registries.BLOCK,
+            new Identifier("embeddedcomputer","secure_computer"),
+            new SecureComputerBlock<>(AbstractBlock.Settings.create().pistonBehavior(PistonBehavior.IGNORE).solid())
+    );
+    public static BlockEntityType<SecureComputerBlockEntity> SECURE_COMPUTER_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            new Identifier("embeddedcomputer", "secure_computer_entity"),
+            BlockEntityType.Builder.create(SecureComputerBlockEntity::new, SECURE_COMPUTER).build(null)
+    );
+    public static Item SECURE_COMPUTER_ITEM = Registry.register(
+            Registries.ITEM,
+            new Identifier("embeddedcomputer", "secure_computer"),
+            new ComputerBlockItem(SECURE_COMPUTER)
+    );
+
     public static final Item DEBUG_MEDIA_ITEM = Registry.register(Registries.ITEM, Identifier.of("embeddedcomputer", "debug_rock"), new DebugMediaItem(new Item.Settings()));
     public static final Item ZIP_DISK_ITEM = Registry.register(Registries.ITEM, Identifier.of("embeddedcomputer", "zip_disk"), new ZipDiskItem(new Item.Settings()));
     public static final Item FLASH_CARD_ITEM = Registry.register(Registries.ITEM, Identifier.of("embeddedcomputer", "flash_card"), new FlashCardItem(new Item.Settings()));
 
+    public static final ComputerComponent<IEmbeddedComputer> EMBEDDED_COMPONENT = ComputerComponent.create("embeddedcomputer", "embedded");
+    public static final ComputerComponent<IEmbeddedComputer> SECURE_COMPONENT = ComputerComponent.create("embeddedcomputer","secure");
+
     public void registerPeripherals() {
         PeripheralLookup.get().registerForBlockEntities(EmbeddedComputerPeripheral::getPeripheral,EMBEDDED_COMPUTER_ENTITY);
         PeripheralLookup.get().registerForBlockEntities(HardDrivePeripheral::getPeripheral,HARD_DRIVE_ENTITY);
+        PeripheralLookup.get().registerForBlockEntities(SecureComputerPeripheral::getPeripheral,SECURE_COMPUTER_ENTITY);
     }
     public void registerItemGroups() {
         var a = new registry1();
