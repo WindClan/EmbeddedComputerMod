@@ -1,0 +1,8 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "embeddedcomputer:block/embed_top",
+        "front": "embeddedcomputer:block/secure_off",
+        "side": "embeddedcomputer:block/embed_side"
+    }
+}

@@ -10,6 +10,7 @@ import dan200.computercraft.shared.computer.blocks.ComputerBlockEntity;
 import dan200.computercraft.shared.computer.core.ComputerFamily;
 import dan200.computercraft.shared.computer.core.ServerComputer;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import org.windclan.embeddedcomputer.embedded.EmbeddedComputerBrain;
@@ -21,10 +22,16 @@ import static java.util.Objects.isNull;
 
 public class EmbeddedComputerBlockEntity extends ComputerBlockEntity {
     private IPeripheral p;
+    public EmbeddedComputerBlockEntity(BlockEntityType type, BlockPos pos, BlockState state) {
+        super(type,pos,state,ComputerFamily.ADVANCED);
+    }
     public EmbeddedComputerBlockEntity(BlockPos pos, BlockState state) {
         super(registry.EMBEDDED_COMPUTER_ENTITY,pos,state,ComputerFamily.ADVANCED);
     }
     private final EmbeddedComputerBrain brain = new EmbeddedComputerBrain(this); // This does nothing. it's just there to make the Computer Component happy lmao
+    public EmbeddedComputerBrain getBrain() {
+        return brain;
+    }
     @Override
     protected ServerComputer createComputer(int id) {
         return new ServerEmbeddedComputer(
@@ -32,6 +39,7 @@ public class EmbeddedComputerBlockEntity extends ComputerBlockEntity {
                 ServerEmbeddedComputer.properties(id,ComputerFamily.ADVANCED)
                         .label(label)
                         .terminalSize(10,3)
+                        .addComponent(registry.SECURE_COMPONENT,brain)
                         .addComponent(registry.EMBEDDED_COMPONENT,brain)
         );
     }

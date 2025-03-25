@@ -1,0 +1,25 @@
+{
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "name": "embeddedcomputer:secure_computer",
+          "type": "minecraft:item"
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "source": "block_entity",
+      "include": [
+        "computercraft:computer_id"
+      ],
+      "function": "minecraft:copy_components"
+    }
+  ]
+}
+
+

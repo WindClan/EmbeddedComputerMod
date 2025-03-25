@@ -5,7 +5,6 @@
  */
 package org.windclan.embeddedcomputer.embedded;
 
-import dan200.computercraft.api.ComputerCraftAPI;
 import dan200.computercraft.api.filesystem.WritableMount;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.peripheral.IComputerAccess;
@@ -14,20 +13,13 @@ import dan200.computercraft.shared.computer.blocks.AbstractComputerBlockEntity;
 import dan200.computercraft.shared.computer.core.ServerComputer;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.Direction;
-import org.windclan.embeddedcomputer.storage.harddrive.HardDrivePeripheral;
 import org.jetbrains.annotations.Nullable;
 import org.windclan.embeddedcomputer.embedded.block.EmbeddedComputerBlockEntity;
+import org.windclan.embeddedcomputer.secure.HashUtil;
 
-import java.nio.ByteBuffer;
 import java.nio.channels.SeekableByteChannel;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.OpenOption;
-import java.nio.file.StandardOpenOption;
-import java.util.Collections;
 import java.util.Scanner;
-import java.util.Set;
 
-import static dan200.computercraft.shared.pocket.items.PocketComputerItem.getServerComputer;
 import static java.util.Objects.isNull;
 import static org.windclan.embeddedcomputer.main.log;
 
@@ -62,11 +54,20 @@ public class EmbeddedComputerPeripheral implements IPeripheral {
         var comp1= getServerComp();
         return !isNull(comp1) && comp1.isOn();
     }
+
+    @LuaFunction
+    public final int getId() {
+        var comp1= getServerComp();
+        if (!isNull(comp1)) return comp1.getID();
+        else return -1;
+    }
+
     @LuaFunction
     public final void reboot() {
         var comp1 = getServerComp();
         if (!isNull(comp1)) comp1.reboot();
     }
+
     @LuaFunction(mainThread = true)
     public final boolean format() {
         var comp1 = getServerComp();
@@ -74,7 +75,7 @@ public class EmbeddedComputerPeripheral implements IPeripheral {
         if (!isNull(comp1)) {
             try {
                 mnt = comp1.createRootMount();
-                if (mnt.exists(".LOCKED")) {
+                if (mnt.exists(".LOCKED") || mnt.exists(".LOCKED_HASHED")) {
                     return false;
                 }
                 try {
@@ -94,7 +95,7 @@ public class EmbeddedComputerPeripheral implements IPeripheral {
     }
 
     @LuaFunction(mainThread = true)
-    public final void unlock(String pass1) {
+    public final void unlockPlainText(String pass1) {
         ServerComputer comp1 = getServerComp();
         if (!isNull(comp)) {
             WritableMount mnt;
@@ -130,6 +131,77 @@ public class EmbeddedComputerPeripheral implements IPeripheral {
                 return;
             }
         }
+    }
+
+    @LuaFunction(mainThread = true)
+    public final void unlockHashed(String pass1,String hashType) {
+        ServerComputer comp1 = getServerComp();
+        String hashedPass;
+        if (hashType.equalsIgnoreCase("sha256")) {
+            hashedPass = HashUtil.hashStrSHA256(pass1);
+            for (int i=0; i <= pass1.length(); i++) {
+                hashedPass = HashUtil.hashStrSHA256(hashedPass);
+            }
+        } else if (hashType.equalsIgnoreCase("murmur3")) {
+            hashedPass = HashUtil.hashStrMurmur3(pass1);
+            for (int i=0; i <= pass1.length(); i++) {
+                hashedPass = HashUtil.hashStrMurmur3(hashedPass);
+            }
+        } else if (hashType.equalsIgnoreCase("adler32")) {
+            hashedPass = HashUtil.hashStrAdler32(pass1);
+            for (int i=0; i <= pass1.length(); i++) {
+                hashedPass = HashUtil.hashStrAdler32(hashedPass);
+            }
+        } else if (hashType.equalsIgnoreCase("siphash24")) {
+            hashedPass = HashUtil.hashStrSipHash24(pass1);
+            for (int i=0; i <= pass1.length(); i++) {
+                hashedPass = HashUtil.hashStrSipHash24(hashedPass);
+            }
+        } else {
+            return;
+        }
+        for (int i=0; i <= pass1.length(); i++) {
+            hashedPass = HashUtil.hashStrSHA512(hashedPass);
+        }
+        if (!isNull(comp)) {
+            WritableMount mnt;
+            SeekableByteChannel root = null;
+            Scanner scan = null;
+            try {
+                mnt = comp1.createRootMount();
+                if (mnt.exists(".LOCKED_HASHED")) {
+                    String pass = "";
+                    root = comp1.createRootMount().openForRead(".LOCKED_HASHED");
+                    scan = new Scanner(root);
+                    while (scan.hasNext()) {
+                        pass+=scan.next();
+                    }
+                    scan.close();
+                    if (!pass.equals(hashedPass)) {
+                        root.close();
+                        return;
+                    }
+                    mnt.delete(".LOCKED_HASHED");
+                    return;
+                }
+            } catch (Exception ex) {
+                log.warn(ex.toString());
+                if (!isNull(root)) {
+                    try {
+                        root.close();
+                    } catch (Exception ignored) {}
+                }
+                if (!isNull(scan)) {
+                    scan.close();
+                }
+                return;
+            }
+        }
+    }
+
+    @LuaFunction(mainThread = true)
+    public final void unlock(String pass1) {
+        unlockHashed(pass1,"sha256");
     }
 
     // Generic functions
