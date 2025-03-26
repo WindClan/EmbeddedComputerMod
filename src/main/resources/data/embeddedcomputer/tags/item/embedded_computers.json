@@ -1,0 +1,6 @@
+{
+    "values": [
+        "embeddedcomputer:embedded_computer",
+		"embeddedcomputer:secure_computer"
+    ]
+}
