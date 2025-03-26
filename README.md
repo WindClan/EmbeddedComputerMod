@@ -24,6 +24,6 @@ Since 1.1.0/0.4.0 they are hashed but if you use an actual password (even if it 
 
 ## License
 
-All versions prior to [v0.2.2 (82b367be5ee7d6888882f9b947e964fa6b011fbc)](https://github.com/WindClan/EmbeddedComputerMod/commit/82b367be5ee7d6888882f9b947e964fa6b011fbc) are under the MIT license
+All versions [v0.2.2 and prior (82b367be5ee7d6888882f9b947e964fa6b011fbc)](https://github.com/WindClan/EmbeddedComputerMod/commit/82b367be5ee7d6888882f9b947e964fa6b011fbc) are under the MIT license
 
 With permission from the other contributor Herr Katze, all versions past that are licensed as MPL 2.0
