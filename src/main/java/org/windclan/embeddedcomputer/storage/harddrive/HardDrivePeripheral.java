@@ -35,7 +35,7 @@ public class HardDrivePeripheral implements IPeripheral {
     }
 
     @LuaFunction(mainThread = true)
-    public final boolean mount(IComputerAccess computer, @Nullable String str) {
+    public final boolean mount(IComputerAccess computer, String str) {
         if (Objects.equals(str, "rom")) {
             return false;
         }
@@ -43,22 +43,8 @@ public class HardDrivePeripheral implements IPeripheral {
         return hdd.attach(computer,str);
     }
     @LuaFunction(mainThread = true)
-    public final boolean mount(IComputerAccess computer) {
-        String str = "drive";
-        if (Objects.equals(str, "rom")) {
-            return false;
-        }
-        mount = str;
-        return hdd.attach(computer,str);
-    }
-
-    @LuaFunction(mainThread = true)
-    public final boolean unmount(IComputerAccess computer, @Nullable String str) {
+    public final boolean unmount(IComputerAccess computer, String str) {
         return hdd.detach(computer,str);
-    }
-    @LuaFunction(mainThread = true)
-    public final boolean unmount(IComputerAccess computer) {
-        return hdd.detach(computer,mount);
     }
     public static IPeripheral getPeripheral(BlockEntity blockEntity, Direction direction) {
         return new HardDrivePeripheral(blockEntity);

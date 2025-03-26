@@ -5,5 +5,7 @@
   "block.embeddedcomputer.hard_drive": "Hard Drive",
   "item.embeddedcomputer.zip_disk": "Zip Disk",
   "item.embeddedcomputer.flash_card": "Flash Card",
-  "item.embeddedcomputer.debug_rock": "Magical Rock of Storage Debugging"
+  "item.embeddedcomputer.debug_rock": "Magical Rock of Storage Debugging",
+  "tag.item.embeddeccomputer.embedded_computers": "Embedded Computers",
+  "tag.block.embeddeccomputer.embedded_computers": "Embedded Computers"
 }
