@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.10-SNAPSHOT'
+    id 'fabric-loom' version '1.11-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -51,7 +51,7 @@ dependencies {
     modImplementation "cc.tweaked:cc-tweaked-${project.minecraft_version}-fabric:$cctVersion"
 
     //RoughlyEnoughItems
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$reiVersion"
+    //modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$reiVersion"
 
     testImplementation 'com.google.code.findbugs:jsr305:3.0.2'
 }

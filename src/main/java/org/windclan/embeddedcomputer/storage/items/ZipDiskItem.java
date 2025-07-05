@@ -7,7 +7,7 @@ package org.windclan.embeddedcomputer.storage.items;
 import org.windclan.embeddedcomputer.storage.MediaItem;
 
 public class ZipDiskItem extends MediaItem {
-    public ZipDiskItem(Settings settings) {
+    public ZipDiskItem(net.minecraft.item.Item.Settings settings) {
         super(settings);
     }
     @Override

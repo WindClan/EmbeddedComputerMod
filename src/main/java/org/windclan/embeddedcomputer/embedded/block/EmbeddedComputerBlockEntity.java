@@ -9,6 +9,7 @@ import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.shared.computer.blocks.ComputerBlockEntity;
 import dan200.computercraft.shared.computer.core.ComputerFamily;
 import dan200.computercraft.shared.computer.core.ServerComputer;
+import dan200.computercraft.shared.computer.core.TerminalSize;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.server.world.ServerWorld;
@@ -38,7 +39,7 @@ public class EmbeddedComputerBlockEntity extends ComputerBlockEntity {
                 (ServerWorld) getWorld(), getPos(), //id, label,brain
                 ServerEmbeddedComputer.properties(id,ComputerFamily.ADVANCED)
                         .label(label)
-                        .terminalSize(10,3)
+                        .terminalSize(new TerminalSize(10,3))
                         .addComponent(registry.SECURE_COMPONENT,brain)
                         .addComponent(registry.EMBEDDED_COMPONENT,brain)
         );

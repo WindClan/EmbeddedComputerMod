@@ -2,10 +2,8 @@ package org.windclan.embeddedcomputer.secure.block;
 
 import dan200.computercraft.shared.computer.core.ComputerFamily;
 import dan200.computercraft.shared.computer.core.ServerComputer;
+import dan200.computercraft.shared.computer.core.TerminalSize;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import org.windclan.embeddedcomputer.embedded.ServerEmbeddedComputer;
@@ -24,7 +22,7 @@ public class SecureComputerBlockEntity extends EmbeddedComputerBlockEntity {
                 (ServerWorld) getWorld(), getPos(), //id, label,brain
                 ServerEmbeddedComputer.properties(id, ComputerFamily.ADVANCED)
                         .label(label)
-                        .terminalSize(49,17)
+                        .terminalSize(new TerminalSize(49,17))
                         .addComponent(registry.SECURE_COMPONENT,this.getBrain())
         );
     }

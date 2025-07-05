@@ -10,6 +10,7 @@ import dan200.computercraft.api.filesystem.WritableMount;
 import dan200.computercraft.api.media.IMedia;
 import dan200.computercraft.shared.integration.FabricPermissionRegistry;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
@@ -23,9 +24,10 @@ import org.jetbrains.annotations.Nullable;
 import org.windclan.embeddedcomputer.registry;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public abstract class MediaItem extends Item implements IMedia {
-    public MediaItem(Settings settings) {
+    public MediaItem(net.minecraft.item.Item.Settings settings) {
         super(settings);
     }
     private static final String nbtId = "id";
@@ -68,10 +70,10 @@ public abstract class MediaItem extends Item implements IMedia {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
         var id = getId(stack);
         if (id >= 0) {
-            tooltip.add(Text.literal("Id: "+id)
+            textConsumer.accept(Text.literal("Id: "+id)
                     .formatted(Formatting.GRAY));
         }
     }

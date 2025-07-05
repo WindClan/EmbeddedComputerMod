@@ -8,7 +8,7 @@ package org.windclan.embeddedcomputer.storage.items;
 import org.windclan.embeddedcomputer.storage.MediaItem;
 
 public class DebugMediaItem extends MediaItem {
-    public DebugMediaItem(Settings settings) {
+    public DebugMediaItem(net.minecraft.item.Item.Settings settings) {
         super(settings);
     }
     @Override

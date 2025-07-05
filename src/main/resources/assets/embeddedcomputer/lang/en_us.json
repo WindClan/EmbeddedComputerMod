@@ -3,9 +3,12 @@
   "block.embeddedcomputer.embedded_computer": "Embedded Computer",
   "block.embeddedcomputer.secure_computer": "Secure Computer",
   "block.embeddedcomputer.hard_drive": "Hard Drive",
+  "item.embeddedcomputer.embedded_computer": "Embedded Computer",
+  "item.embeddedcomputer.secure_computer": "Secure Computer",
+  "item.embeddedcomputer.hard_drive": "Hard Drive",
   "item.embeddedcomputer.zip_disk": "Zip Disk",
   "item.embeddedcomputer.flash_card": "Flash Card",
   "item.embeddedcomputer.debug_rock": "Magical Rock of Storage Debugging",
-  "tag.item.embeddeccomputer.embedded_computers": "Embedded Computers",
-  "tag.block.embeddeccomputer.embedded_computers": "Embedded Computers"
+  "tag.item.embeddedcomputer.embedded_computers": "Embedded Computers",
+  "tag.block.embeddedcomputer.embedded_computers": "Embedded Computers"
 }

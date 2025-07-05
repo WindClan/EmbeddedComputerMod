@@ -1,6 +1,5 @@
 package org.windclan.embeddedcomputer.secure.block;
 
-import dan200.computercraft.shared.computer.blocks.AbstractComputerBlockEntity;
 import dan200.computercraft.shared.network.container.ComputerContainerData;
 import dan200.computercraft.shared.platform.PlatformHelper;
 import dan200.computercraft.shared.util.BlockEntityHelpers;
@@ -39,7 +38,7 @@ public class SecureComputerBlock<T extends SecureComputerBlockEntity> extends Em
     }
 
     @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state, boolean includeData) {
         var id = -1;
         var comp1 = world.getBlockEntity(pos);
         if (!isNull(comp1)) {
@@ -68,6 +67,6 @@ public class SecureComputerBlock<T extends SecureComputerBlockEntity> extends Em
                 PlatformHelper.get().openMenu(player,blockEntity.getName(),blockEntity, new ComputerContainerData(computer,getItem(blockEntity)));
             }
         }
-        return ActionResult.success(true);
+        return ActionResult.SUCCESS;
     }
 }

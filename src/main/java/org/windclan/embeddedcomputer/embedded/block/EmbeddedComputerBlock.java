@@ -27,6 +27,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.block.WireOrientation;
+import org.jetbrains.annotations.Nullable;
 import org.windclan.embeddedcomputer.embedded.item.ComputerBlockItem;
 import org.windclan.embeddedcomputer.registry;
 
@@ -56,11 +58,11 @@ public class EmbeddedComputerBlock<T extends EmbeddedComputerBlockEntity> extend
     }
     // update for peripherals
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         var comp1 = world.getBlockEntity(pos);
         if (!isNull(comp1) && comp1 instanceof EmbeddedComputerBlockEntity) {
             var comp = (EmbeddedComputerBlockEntity) comp1;
-            comp.neighborChanged(pos);
+            comp.neighborChanged();
         }
     }
     @Override
@@ -71,7 +73,6 @@ public class EmbeddedComputerBlock<T extends EmbeddedComputerBlockEntity> extend
             comp.updateInputsImmediately();
         }
     }
-
     //turn on computer
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
@@ -87,7 +88,7 @@ public class EmbeddedComputerBlock<T extends EmbeddedComputerBlockEntity> extend
                 computer.reboot();
             }
         }
-        return ActionResult.success(true);
+        return ActionResult.SUCCESS;
     }
 
     @Override
@@ -104,7 +105,7 @@ public class EmbeddedComputerBlock<T extends EmbeddedComputerBlockEntity> extend
     }
 
     @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state, boolean includeData) {
         var id = -1;
         var comp1 = world.getBlockEntity(pos);
         if (!isNull(comp1)) {

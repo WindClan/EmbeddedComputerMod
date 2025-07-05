@@ -12,8 +12,9 @@ import dan200.computercraft.api.peripheral.IPeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.ComponentMap;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.component.ComponentsAccess;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.windclan.embeddedcomputer.registry;
@@ -58,15 +59,15 @@ public class HardDriveBlockEntity extends BlockEntity  {
         }
     }
     @Override
-    public void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        nbt.putString("uuid", uuid);
-        super.writeNbt(nbt,registryLookup);
+    public void writeData(WriteView view) {
+        view.putString("uuid", uuid);
+        super.writeData(view);
     }
 
     @Override
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt,registryLookup);
-        uuid = nbt.getString("uuid");
+    public void readData(ReadView view) {
+        super.readData(view);
+        uuid = view.getString("uuid","");
         if (uuid.isEmpty()) {
             uuid = UUID.randomUUID().toString();
             markDirty();
@@ -90,12 +91,10 @@ public class HardDriveBlockEntity extends BlockEntity  {
     }
 
     @Override
-    public void removeFromCopiedStackNbt(NbtCompound nbt) {
-        nbt.remove("uuid");
+    public void removeFromCopiedStackData(WriteView view) {
+        view.remove("uuid");
     }
     public IPeripheral peripheral() {
         return periph;
     }
-
-
 }

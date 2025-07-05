@@ -8,6 +8,7 @@ package org.windclan.embeddedcomputer.embedded.item;
 import dan200.computercraft.shared.ModRegistry;
 import dan200.computercraft.shared.util.NonNegativeId;
 import net.minecraft.block.Block;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,23 +18,31 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.windclan.embeddedcomputer.registry;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ComputerBlockItem extends BlockItem {
+    public ComputerBlockItem(Block block, Item.Settings s) {
+        super(block, s);
+    }
     public ComputerBlockItem(Block block) {
-        super(block, new Item.Settings().fireproof());
+        this(block, new Item.Settings().fireproof());
+    }
+    public ComputerBlockItem(Item.Settings s) {
+        this(registry.EMBEDDED_COMPUTER, s);
     }
     public ItemStack newComputerItem(int id) {
         var stack = new ItemStack(this);
-        if (id > 0) stack.set(ModRegistry.DataComponents.COMPUTER_ID.get(),NonNegativeId.of(id));
+        if (id > 0) stack.set(ModRegistry.DataComponents.COMPUTER_ID.get(), new NonNegativeId.Computer(id));
         return stack;
     }
     @Override
-    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
         NonNegativeId computerId = stack.get(ModRegistry.DataComponents.COMPUTER_ID.get());
         if (computerId == null) return;
         if (computerId.id() < 0) return;
-        tooltip.add(Text.literal("Computer: "+computerId.id()).formatted(Formatting.DARK_GRAY));
+        textConsumer.accept(Text.literal("Computer: "+computerId.id()).formatted(Formatting.DARK_GRAY));
     }
 }
