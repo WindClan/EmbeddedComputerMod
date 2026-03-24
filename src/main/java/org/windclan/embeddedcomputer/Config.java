@@ -11,7 +11,7 @@ public class Config {
     public static ConfigClassHandler<Config> HANDLER = ConfigClassHandler.createBuilder(Config.class)
             .id(Identifier.of("embeddedcomputer", "config"))
             .serializer(config -> GsonConfigSerializerBuilder.create(config)
-                    .setPath(FabricLoader.getInstance().getConfigDir().resolve("config.json5"))
+                    .setPath(FabricLoader.getInstance().getConfigDir().resolve("embeddedcomputermod.json5"))
                     .appendGsonBuilder(GsonBuilder::setPrettyPrinting) // not needed, pretty print by default
                     .setJson5(true)
                     .build())
