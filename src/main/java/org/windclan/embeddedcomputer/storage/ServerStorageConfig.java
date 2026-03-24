@@ -5,9 +5,18 @@
  */
 package org.windclan.embeddedcomputer.storage;
 
+import org.windclan.embeddedcomputer.Config;
+
 public class ServerStorageConfig {
-    public static int ZIP_DISK_STORAGE = 5000000;
-    public static int FLASH_CARD_STORAGE = 2500000;
-    public static int DEBUG_ITEM_STORAGE = 2147483647;
-    public static int HARD_DRIVE_STORAGE = 25000000;
+    public static int ZIP_DISK_STORAGE = 0;
+    public static int FLASH_CARD_STORAGE = 0;
+    public static int DEBUG_ITEM_STORAGE = 0;
+    public static int HARD_DRIVE_STORAGE = 0;
+
+    public static void updateConfig() {
+        ZIP_DISK_STORAGE = Config.HANDLER.instance().ZIP_DISK_STORAGE;
+        FLASH_CARD_STORAGE = Config.HANDLER.instance().FLASH_CARD_STORAGE;
+        DEBUG_ITEM_STORAGE = Config.HANDLER.instance().DEBUG_ITEM_STORAGE;
+        HARD_DRIVE_STORAGE = Config.HANDLER.instance().HARD_DRIVE_STORAGE;
+    }
 }

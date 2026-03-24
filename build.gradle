@@ -35,6 +35,11 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
+
+    maven {
+        name 'Xander Maven'
+        url 'https://maven.isxander.dev/releases'
+    }
 }
 
 dependencies {
@@ -50,10 +55,9 @@ dependencies {
     modCompileOnly "cc.tweaked:cc-tweaked-${project.minecraft_version}-fabric-api:$cctVersion"
     modImplementation "cc.tweaked:cc-tweaked-${project.minecraft_version}-fabric:$cctVersion"
 
-    //RoughlyEnoughItems
-    //modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$reiVersion"
-
     testImplementation 'com.google.code.findbugs:jsr305:3.0.2'
+
+    modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
 }
 
 processResources {
