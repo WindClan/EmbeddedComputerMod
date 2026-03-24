@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.windclan.embeddedcomputer.registry;
 import org.jetbrains.annotations.Nullable;
+import org.windclan.embeddedcomputer.storage.ServerStorageConfig;
 
 import java.util.UUID;
 
@@ -38,7 +39,7 @@ public class HardDriveBlockEntity extends BlockEntity  {
             uuid = UUID.randomUUID().toString();
             markDirty();
         }
-        return ComputerCraftAPI.createSaveDirMount(world.getServer(), "hdd/" + uuid, 25000000); // 25 Megabytes
+        return ComputerCraftAPI.createSaveDirMount(world.getServer(), "hdd/" + uuid, ServerStorageConfig.HARD_DRIVE_STORAGE); // 25 Megabytes
     }
     public boolean attach(IComputerAccess computer, @Nullable String str) {
         if (isNull(str)) {

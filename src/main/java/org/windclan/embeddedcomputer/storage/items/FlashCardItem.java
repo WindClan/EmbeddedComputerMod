@@ -6,6 +6,7 @@
 package org.windclan.embeddedcomputer.storage.items;
 
 import org.windclan.embeddedcomputer.storage.MediaItem;
+import org.windclan.embeddedcomputer.storage.ServerStorageConfig;
 
 public class FlashCardItem extends MediaItem {
     public FlashCardItem(net.minecraft.item.Item.Settings settings) {
@@ -13,7 +14,7 @@ public class FlashCardItem extends MediaItem {
     }
     @Override
     public int getMaxStorage() {
-        return 2500000; // 2.5 Megabytes
+        return ServerStorageConfig.FLASH_CARD_STORAGE; // 2.5 Megabytes
     }
 
     @Override

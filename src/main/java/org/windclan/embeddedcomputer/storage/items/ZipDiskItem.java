@@ -5,6 +5,7 @@
  */
 package org.windclan.embeddedcomputer.storage.items;
 import org.windclan.embeddedcomputer.storage.MediaItem;
+import org.windclan.embeddedcomputer.storage.ServerStorageConfig;
 
 public class ZipDiskItem extends MediaItem {
     public ZipDiskItem(net.minecraft.item.Item.Settings settings) {
@@ -12,7 +13,7 @@ public class ZipDiskItem extends MediaItem {
     }
     @Override
     public int getMaxStorage() {
-        return 5000000; // 5 Megabytes
+        return ServerStorageConfig.ZIP_DISK_STORAGE; // 5 Megabytes
     }
     @Override
     public String getMountName() {

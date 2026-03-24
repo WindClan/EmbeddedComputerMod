@@ -6,6 +6,7 @@
 package org.windclan.embeddedcomputer.storage.items;
 
 import org.windclan.embeddedcomputer.storage.MediaItem;
+import org.windclan.embeddedcomputer.storage.ServerStorageConfig;
 
 public class DebugMediaItem extends MediaItem {
     public DebugMediaItem(net.minecraft.item.Item.Settings settings) {
@@ -13,7 +14,7 @@ public class DebugMediaItem extends MediaItem {
     }
     @Override
     public int getMaxStorage() {
-        return 2147483647; // ~2 Gigabytes
+        return ServerStorageConfig.DEBUG_ITEM_STORAGE; // ~2 Gigabytes
     }
 
     @Override
