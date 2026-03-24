@@ -13,14 +13,10 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 import org.windclan.embeddedcomputer.registry;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 public class ComputerBlockItem extends BlockItem {

@@ -5,7 +5,6 @@ import dan200.computercraft.shared.computer.blocks.AbstractComputerBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.Direction;
 import org.windclan.embeddedcomputer.embedded.EmbeddedComputerPeripheral;
-import org.windclan.embeddedcomputer.embedded.block.EmbeddedComputerBlockEntity;
 import org.windclan.embeddedcomputer.secure.block.SecureComputerBlockEntity;
 
 public class SecureComputerPeripheral extends EmbeddedComputerPeripheral implements IPeripheral {

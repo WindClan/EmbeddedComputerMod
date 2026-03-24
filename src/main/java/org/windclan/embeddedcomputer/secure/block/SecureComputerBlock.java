@@ -29,7 +29,7 @@ public class SecureComputerBlock<T extends SecureComputerBlockEntity> extends Em
     private final BlockEntityTicker<T> ticker = (level, pos, state, computer) -> computer.serverTick();
     @Override
     public BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType type) {
-        return world.isClient ? null : BlockEntityHelpers.createTickerHelper(type, (BlockEntityType) registry.SECURE_COMPUTER_ENTITY, ticker);
+        return world.isClient() ? null : BlockEntityHelpers.createTickerHelper(type, (BlockEntityType) registry.SECURE_COMPUTER_ENTITY, ticker);
     }
 
     @Override

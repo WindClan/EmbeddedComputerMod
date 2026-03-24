@@ -54,7 +54,7 @@ public class EmbeddedComputerBlockEntity extends ComputerBlockEntity {
     protected boolean wasOn = false;
     @Override
     public void serverTick() {
-        if (isNull(getWorld()) || getWorld().isClient) {
+        if (isNull(getWorld()) || getWorld().isClient()) {
             return; //no.
         }
         if (getComputerID() < 0) {

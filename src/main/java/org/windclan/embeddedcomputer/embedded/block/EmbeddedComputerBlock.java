@@ -19,7 +19,6 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
-import net.minecraft.state.property.Property;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -97,7 +96,7 @@ public class EmbeddedComputerBlock<T extends EmbeddedComputerBlockEntity> extend
     }
     @Override
     public BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType type) {
-        return world.isClient ? null : BlockEntityHelpers.createTickerHelper(type, (BlockEntityType) registry.EMBEDDED_COMPUTER_ENTITY, ticker);
+        return world.isClient() ? null : BlockEntityHelpers.createTickerHelper(type, (BlockEntityType) registry.EMBEDDED_COMPUTER_ENTITY, ticker);
     }
     @Override
     public BlockRenderType getRenderType(BlockState state) {
