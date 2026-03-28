@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.10-SNAPSHOT'
+    id 'fabric-loom' version '1.15-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -35,6 +35,10 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
+    maven {
+        name 'Xander Maven'
+        url 'https://maven.isxander.dev/releases'
+    }
 }
 
 dependencies {
@@ -49,6 +53,8 @@ dependencies {
     //ComputerCraft
     modCompileOnly "cc.tweaked:cc-tweaked-${project.minecraft_version}-fabric-api:$cctVersion"
     modImplementation "cc.tweaked:cc-tweaked-${project.minecraft_version}-fabric:$cctVersion"
+
+    modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
 
     //RoughlyEnoughItems
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$reiVersion"

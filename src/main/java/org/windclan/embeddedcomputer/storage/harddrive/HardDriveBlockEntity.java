@@ -21,6 +21,8 @@ import java.util.UUID;
 
 import static java.util.Objects.isNull;
 
+import org.windclan.embeddedcomputer.storage.ServerStorageConfig;
+
 public class HardDriveBlockEntity extends BlockEntity  {
     public HardDriveBlockEntity(BlockPos pos, BlockState state) {
         super(registry.HARD_DRIVE_ENTITY,pos, state);
@@ -35,7 +37,7 @@ public class HardDriveBlockEntity extends BlockEntity  {
             uuid = UUID.randomUUID().toString();
             markDirty();
         }
-        return ComputerCraftAPI.createSaveDirMount(world.getServer(), "hdd/" + uuid, 25000000); // 25 Megabytes
+        return ComputerCraftAPI.createSaveDirMount(world.getServer(), "hdd/" + uuid, ServerStorageConfig.HARD_DRIVE_STORAGE); // 25 Megabytes
     }
     public boolean attach(IComputerAccess computer, @Nullable String str) {
         if (isNull(str)) {

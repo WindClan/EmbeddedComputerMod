@@ -24,6 +24,7 @@
   "depends": {
     "fabricloader": ">=${loader_version}",
     "computercraft": ">=${cctVersion}",
+    "yet_another_config_lib_v3": "*",
     "fabric": "*",
     "minecraft": "${minecraft_version}"
   }
