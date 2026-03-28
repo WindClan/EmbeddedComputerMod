@@ -11,6 +11,7 @@ import org.windclan.embeddedcomputer.embedded.EmbeddedComputerAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.windclan.embeddedcomputer.secure.SecureComputerAPI;
+import org.windclan.embeddedcomputer.storage.ServerStorageConfig;
 
 public class main implements ModInitializer {
 
@@ -28,5 +29,8 @@ public class main implements ModInitializer {
             var secure = computer.getComponent(registry.SECURE_COMPONENT);
             return secure == null ? null : new SecureComputerAPI(secure);
         });
+
+        Config.HANDLER.load();
+        ServerStorageConfig.updateConfig();
     }
 }

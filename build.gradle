@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.10-SNAPSHOT'
+    id 'fabric-loom' version '1.15-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -35,6 +35,10 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
+    maven {
+        name 'Xander Maven'
+        url 'https://maven.isxander.dev/releases'
+    }
 }
 
 dependencies {
@@ -52,6 +56,8 @@ dependencies {
 
     //RoughlyEnoughItems
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$reiVersion"
+
+    modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
 
     testImplementation 'com.google.code.findbugs:jsr305:3.0.2'
 }
