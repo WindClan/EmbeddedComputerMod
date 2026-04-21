@@ -12,7 +12,7 @@
     "C": "minecraft:copper_ingot"
   },
   "result": {
-    "item": "embeddedcomputer:zip_disk",
+    "id": "embeddedcomputer:zip_disk",
     "count": 1
   }
 }

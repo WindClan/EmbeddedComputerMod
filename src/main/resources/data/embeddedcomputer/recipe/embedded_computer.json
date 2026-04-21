@@ -10,7 +10,7 @@
     "R": "minecraft:redstone"
   },
   "result": {
-    "item": "embeddedcomputer:embedded_computer",
+    "id": "embeddedcomputer:embedded_computer",
     "count": 1
   }
 }
