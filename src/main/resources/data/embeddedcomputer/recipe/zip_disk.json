@@ -20,7 +20,7 @@
     }
   },
   "result": {
-    "item": "embeddedcomputer:zip_disk",
+    "id": "embeddedcomputer:zip_disk",
     "count": 1
   }
 }

@@ -20,7 +20,7 @@
     }
   },
   "result": {
-    "item": "embeddedcomputer:flash_card",
+    "id": "embeddedcomputer:flash_card",
     "count": 1
   }
 }

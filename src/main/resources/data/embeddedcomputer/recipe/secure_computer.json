@@ -23,7 +23,7 @@
     }
   },
   "result": {
-    "item": "embeddedcomputer:secure_computer",
+    "id": "embeddedcomputer:secure_computer",
     "count": 1
   }
 }

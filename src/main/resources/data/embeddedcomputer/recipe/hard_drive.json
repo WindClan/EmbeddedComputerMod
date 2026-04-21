@@ -20,7 +20,7 @@
     }
   },
   "result": {
-    "item": "embeddedcomputer:hard_drive",
+    "id": "embeddedcomputer:hard_drive",
     "count": 1
   }
 }
