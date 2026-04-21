@@ -6,12 +6,8 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "minecraft:gold_ingot"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    }
+    "G": "minecraft:gold_ingot",
+    "R": "minecraft:redstone"
   },
   "result": {
     "item": "embeddedcomputer:embedded_computer",

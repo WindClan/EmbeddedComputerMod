@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DGD",
+    "SRS",
+    "DGD"
+  ],
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "S": "minecraft:stone",
+    "D": "minecraft:diamond",
+    "R": "minecraft:redstone"
+  },
+  "result": {
+    "item": "embeddedcomputer:hard_drive",
+    "count": 1
+  }
+}
+

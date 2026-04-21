@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GEG",
+    "GRG",
+    "TPT"
+  ],
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "T": "minecraft:tripwire_hook",
+    "E": "minecraft:ender_eye",
+    "P": "minecraft:glass_pane",
+    "R": "minecraft:redstone"
+  },
+  "result": {
+    "item": "embeddedcomputer:secure_computer",
+    "count": 1
+  }
+}

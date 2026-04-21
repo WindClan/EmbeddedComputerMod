@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BGB",
+    "IRI",
+    "BGB"
+  ],
+  "key": {
+    "G": "minecraft:glass_pane",
+    "I": "minecraft:iron_ingot",
+    "R": "minecraft:redstone",
+    "B": "minecraft:blaze_powder"
+  },
+  "result": {
+    "item": "embeddedcomputer:flash_card",
+    "count": 1
+  }
+}
+
