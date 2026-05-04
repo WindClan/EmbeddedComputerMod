@@ -9,19 +9,19 @@ import dan200.computercraft.api.ComputerCraftAPI;
 import dan200.computercraft.api.filesystem.WritableMount;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.component.ComponentMap;
-import net.minecraft.component.ComponentsAccess;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import org.windclan.embeddedcomputer.registry;
 import org.jetbrains.annotations.Nullable;
 import org.windclan.embeddedcomputer.storage.ServerStorageConfig;
 
 import java.util.UUID;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import static java.util.Objects.isNull;
 
@@ -33,13 +33,13 @@ public class HardDriveBlockEntity extends BlockEntity  {
     public String uuid = "";
     public String mount;
 
-    public static void tick(World world1, BlockPos pos, BlockState state1, BlockEntity be) {}
+    public static void tick(Level world1, BlockPos pos, BlockState state1, BlockEntity be) {}
     public WritableMount makeMount() {
         if (uuid.isEmpty()) {
             uuid = UUID.randomUUID().toString();
-            markDirty();
+            setChanged();
         }
-        return ComputerCraftAPI.createSaveDirMount(world.getServer(), "hdd/" + uuid, ServerStorageConfig.HARD_DRIVE_STORAGE); // 25 Megabytes
+        return ComputerCraftAPI.createSaveDirMount(level.getServer(), "hdd/" + uuid, ServerStorageConfig.HARD_DRIVE_STORAGE); // 25 Megabytes
     }
     public boolean attach(IComputerAccess computer, @Nullable String str) {
         if (isNull(str)) {
@@ -60,40 +60,40 @@ public class HardDriveBlockEntity extends BlockEntity  {
         }
     }
     @Override
-    public void writeData(WriteView view) {
+    public void saveAdditional(ValueOutput view) {
         view.putString("uuid", uuid);
-        super.writeData(view);
+        super.saveAdditional(view);
     }
 
     @Override
-    public void readData(ReadView view) {
-        super.readData(view);
-        uuid = view.getString("uuid","");
+    public void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
+        uuid = view.getStringOr("uuid","");
         if (uuid.isEmpty()) {
             uuid = UUID.randomUUID().toString();
-            markDirty();
+            setChanged();
         }
     }
 
     @Override
-    protected void readComponents(ComponentsAccess components) {
-        super.readComponents(components);
+    protected void applyImplicitComponents(DataComponentGetter components) {
+        super.applyImplicitComponents(components);
         uuid = components.getOrDefault(registry.uuid,"");
         if (uuid.isEmpty()) {
             uuid = UUID.randomUUID().toString();
-            markDirty();
+            setChanged();
         }
     }
 
     @Override
-    protected void addComponents(ComponentMap.Builder componentMapBuilder) {
-        super.addComponents(componentMapBuilder);
-        componentMapBuilder.add(registry.uuid,this.uuid);
+    protected void collectImplicitComponents(DataComponentMap.Builder componentMapBuilder) {
+        super.collectImplicitComponents(componentMapBuilder);
+        componentMapBuilder.set(registry.uuid,this.uuid);
     }
 
     @Override
-    public void removeFromCopiedStackData(WriteView view) {
-        view.remove("uuid");
+    public void removeComponentsFromTag(ValueOutput view) {
+        view.discard("uuid");
     }
     public IPeripheral peripheral() {
         return periph;

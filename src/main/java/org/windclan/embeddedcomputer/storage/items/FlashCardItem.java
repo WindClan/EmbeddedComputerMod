@@ -9,7 +9,7 @@ import org.windclan.embeddedcomputer.storage.MediaItem;
 import org.windclan.embeddedcomputer.storage.ServerStorageConfig;
 
 public class FlashCardItem extends MediaItem {
-    public FlashCardItem(net.minecraft.item.Item.Settings settings) {
+    public FlashCardItem(net.minecraft.world.item.Item.Properties settings) {
         super(settings);
     }
     @Override

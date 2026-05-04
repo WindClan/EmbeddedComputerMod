@@ -2,8 +2,8 @@ package org.windclan.embeddedcomputer.secure;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.shared.computer.blocks.AbstractComputerBlockEntity;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.windclan.embeddedcomputer.embedded.EmbeddedComputerPeripheral;
 import org.windclan.embeddedcomputer.secure.block.SecureComputerBlockEntity;
 

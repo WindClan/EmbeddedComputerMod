@@ -9,7 +9,7 @@ import org.windclan.embeddedcomputer.storage.MediaItem;
 import org.windclan.embeddedcomputer.storage.ServerStorageConfig;
 
 public class DebugMediaItem extends MediaItem {
-    public DebugMediaItem(net.minecraft.item.Item.Settings settings) {
+    public DebugMediaItem(net.minecraft.world.item.Item.Properties settings) {
         super(settings);
     }
     @Override

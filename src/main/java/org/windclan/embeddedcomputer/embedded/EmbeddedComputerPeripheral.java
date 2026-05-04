@@ -11,14 +11,14 @@ import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.shared.computer.blocks.AbstractComputerBlockEntity;
 import dan200.computercraft.shared.computer.core.ServerComputer;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 import org.windclan.embeddedcomputer.embedded.block.EmbeddedComputerBlockEntity;
 import org.windclan.embeddedcomputer.secure.HashUtil;
 
 import java.nio.channels.SeekableByteChannel;
 import java.util.Scanner;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 import static java.util.Objects.isNull;
 import static org.windclan.embeddedcomputer.main.log;

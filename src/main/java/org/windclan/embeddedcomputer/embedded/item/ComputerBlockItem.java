@@ -7,26 +7,26 @@ package org.windclan.embeddedcomputer.embedded.item;
 
 import dan200.computercraft.shared.ModRegistry;
 import dan200.computercraft.shared.util.NonNegativeId;
-import net.minecraft.block.Block;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import org.windclan.embeddedcomputer.registry;
 
 import java.util.function.Consumer;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.level.block.Block;
 
 public class ComputerBlockItem extends BlockItem {
-    public ComputerBlockItem(Block block, Item.Settings s) {
+    public ComputerBlockItem(Block block, Item.Properties s) {
         super(block, s);
     }
     public ComputerBlockItem(Block block) {
-        this(block, new Item.Settings().fireproof());
+        this(block, new Item.Properties().fireResistant());
     }
-    public ComputerBlockItem(Item.Settings s) {
+    public ComputerBlockItem(Item.Properties s) {
         this(registry.EMBEDDED_COMPUTER, s);
     }
     public ItemStack newComputerItem(int id) {
@@ -35,10 +35,10 @@ public class ComputerBlockItem extends BlockItem {
         return stack;
     }
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> textConsumer, TooltipFlag type) {
         NonNegativeId computerId = stack.get(ModRegistry.DataComponents.COMPUTER_ID.get());
         if (computerId == null) return;
         if (computerId.id() < 0) return;
-        textConsumer.accept(Text.literal("Computer: "+computerId.id()).formatted(Formatting.DARK_GRAY));
+        textConsumer.accept(Component.literal("Computer: "+computerId.id()).withStyle(ChatFormatting.DARK_GRAY));
     }
 }

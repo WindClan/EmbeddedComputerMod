@@ -1,10 +1,16 @@
 plugins {
-    id 'fabric-loom' version '1.15-SNAPSHOT'
+    id 'net.fabricmc.fabric-loom' version '1.16-SNAPSHOT'
     id 'maven-publish'
+    id "com.modrinth.minotaur" version "2.+"
+    id "io.github.themrmilchmann.curseforge-publish" version "0.9.0"
 }
 
 version = project.mod_version
 group = project.maven_group
+
+loom {
+    accessWidenerPath = file("src/main/resources/embeddedcomputer.classtweaker")
+}
 
 base {
     archivesName = project.archives_base_name
@@ -45,19 +51,18 @@ repositories {
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // Fabric API. This is technically optional, but you probably want it anyway.
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     //ComputerCraft
-    modCompileOnly "cc.tweaked:cc-tweaked-${project.minecraft_version}-fabric-api:$cctVersion"
-    modImplementation "cc.tweaked:cc-tweaked-${project.minecraft_version}-fabric:$cctVersion"
+    compileOnly "cc.tweaked:cc-tweaked-${project.minecraft_version}-fabric-api:$cctVersion"
+    implementation "cc.tweaked:cc-tweaked-${project.minecraft_version}-fabric:$cctVersion"
 
     testImplementation 'com.google.code.findbugs:jsr305:3.0.2'
 
-    modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
+    implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
 }
 
 processResources {
@@ -76,7 +81,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.release = 21
+    it.options.release = 25
 }
 
 java {
@@ -85,12 +90,12 @@ java {
     // If you remove this line, sources will not be generated.
     withSourcesJar()
 
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 jar {
-    from("LICENSE") {
+    from("LICENSE.txt") {
         rename { "${it}_${inputs.properties.archivesName}" }
     }
 }
@@ -110,5 +115,35 @@ publishing {
         // Notice: This block does NOT have the same function as the block in the top level.
         // The repositories here will be used for publishing your artifact, not for
         // retrieving dependencies.
+    }
+}
+
+modrinth {
+    token = providers.gradleProperty("modrinthApiToken")// Remember to have the MODRINTH_TOKEN environment variable set or else this will fail - just make sure it stays private!
+    projectId = "embeddedcomputer" // This can be the project ID or the slug. Either will work!
+    versionNumber = "${project.version}" // You don't need to set this manually. Will fail if Modrinth has this version already
+    versionType = "release" // This is the default -- can also be `beta` or `alpha`
+    uploadFile = jar // With Loom, this MUST be set to `remapJar` instead of `jar`!
+    gameVersions = ["${project.minecraft_version}"] // Must be an array, even with only one version
+    dependencies { // A special DSL for creating dependencies
+        required.project "fabric-api"
+        required.project "cc-tweaked"
+        required.project "yacl"
+    }
+}
+curseforge {
+    apiToken = providers.gradleProperty("curseforgeApiToken")
+    publications {
+        register("curseForge") {
+            projectId = "1519384"
+            artifacts.register("main") {
+                displayName = "Embedded Computer ${project.version}"
+                releaseType = ReleaseType.RELEASE
+                relations {
+                    requiredDependency("yacl")
+                    requiredDependency("fabric-api")
+                }
+            }
+        }
     }
 }

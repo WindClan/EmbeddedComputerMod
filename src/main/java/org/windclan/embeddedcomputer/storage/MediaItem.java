@@ -8,22 +8,22 @@ package org.windclan.embeddedcomputer.storage;
 import dan200.computercraft.api.ComputerCraftAPI;
 import dan200.computercraft.api.filesystem.WritableMount;
 import dan200.computercraft.api.media.IMedia;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.Nullable;
 import org.windclan.embeddedcomputer.registry;
 
 import java.util.function.Consumer;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 public abstract class MediaItem extends Item implements IMedia {
-    public MediaItem(net.minecraft.item.Item.Settings settings) {
+    public MediaItem(net.minecraft.world.item.Item.Properties settings) {
         super(settings);
     }
     private static final String nbtId = "id";
@@ -42,21 +42,21 @@ public abstract class MediaItem extends Item implements IMedia {
 
     @Nullable
     @Override
-    public String getLabel(RegistryWrapper.WrapperLookup a, ItemStack stack) {
-        if (stack.get(DataComponentTypes.CUSTOM_NAME) != null) return stack.get(DataComponentTypes.CUSTOM_NAME).getString();
+    public String getLabel(HolderLookup.Provider a, ItemStack stack) {
+        if (stack.get(DataComponents.CUSTOM_NAME) != null) return stack.get(DataComponents.CUSTOM_NAME).getString();
         else return null;
     }
 
     @Override
     public boolean setLabel(ItemStack stack, @Nullable String label) {
-        if (label != null) stack.set(DataComponentTypes.CUSTOM_NAME,Text.of(label));
-        else stack.set(DataComponentTypes.CUSTOM_NAME,null);
+        if (label != null) stack.set(DataComponents.CUSTOM_NAME,Component.nullToEmpty(label));
+        else stack.set(DataComponents.CUSTOM_NAME,null);
         return true;
     }
 
     @Nullable
     @Override
-    public WritableMount createDataMount(ItemStack stack, ServerWorld world) {
+    public WritableMount createDataMount(ItemStack stack, ServerLevel world) {
         var diskID = getId(stack);
         if (diskID < 0) {
             diskID = ComputerCraftAPI.createUniqueNumberedSaveDir(world.getServer(), getMountName());
@@ -66,11 +66,11 @@ public abstract class MediaItem extends Item implements IMedia {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> textConsumer, TooltipFlag type) {
         var id = getId(stack);
         if (id >= 0) {
-            textConsumer.accept(Text.literal("Id: "+id)
-                    .formatted(Formatting.GRAY));
+            textConsumer.accept(Component.literal("Id: "+id)
+                    .withStyle(ChatFormatting.GRAY));
         }
     }
 }
