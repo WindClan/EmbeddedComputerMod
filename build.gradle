@@ -119,7 +119,7 @@ publishing {
 }
 
 modrinth {
-    token = providers.gradleProperty("modrinthApiToken")// Remember to have the MODRINTH_TOKEN environment variable set or else this will fail - just make sure it stays private!
+    token = System.getenv("MODRINTH_TOKEN")// Remember to have the MODRINTH_TOKEN environment variable set or else this will fail - just make sure it stays private!
     projectId = "embeddedcomputer" // This can be the project ID or the slug. Either will work!
     versionNumber = "${project.version}" // You don't need to set this manually. Will fail if Modrinth has this version already
     versionType = "release" // This is the default -- can also be `beta` or `alpha`
@@ -132,13 +132,13 @@ modrinth {
     }
 }
 curseforge {
-    apiToken = providers.gradleProperty("curseforgeApiToken")
+    apiToken = System.getenv("CURSEFORGE_TOKEN")
     publications {
-        register("curseForge") {
+        named("fabric") {
             projectId = "1519384"
-            artifacts.register("main") {
+            artifacts.named("main") {
+                projectId = "1519384"
                 displayName = "Embedded Computer ${project.version}"
-                releaseType = ReleaseType.RELEASE
                 relations {
                     requiredDependency("yacl")
                     requiredDependency("fabric-api")
@@ -146,4 +146,9 @@ curseforge {
             }
         }
     }
+}
+
+tasks.register('remapJar') {
+    dependsOn 'jar'
+    outputs.file(project.buildDir.absolutePath.concat("/libs/embeddedcomputer-${project.version}.jar"))
 }
