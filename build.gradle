@@ -1,8 +1,7 @@
 plugins {
-    id 'net.fabricmc.fabric-loom' version '1.16-SNAPSHOT'
+    id 'net.fabricmc.fabric-loom' version '1.17-SNAPSHOT'
     id 'maven-publish'
     id "com.modrinth.minotaur" version "2.+"
-    id "io.github.themrmilchmann.curseforge-publish" version "0.9.0"
 }
 
 version = project.mod_version
@@ -129,22 +128,6 @@ modrinth {
         required.project "fabric-api"
         required.project "cc-tweaked"
         required.project "yacl"
-    }
-}
-curseforge {
-    apiToken = System.getenv("CURSEFORGE_TOKEN")
-    publications {
-        named("fabric") {
-            projectId = "1519384"
-            artifacts.named("main") {
-                projectId = "1519384"
-                displayName = "Embedded Computer ${project.version}"
-                relations {
-                    requiredDependency("yacl")
-                    requiredDependency("fabric-api")
-                }
-            }
-        }
     }
 }
 
